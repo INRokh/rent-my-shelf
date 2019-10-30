@@ -1,31 +1,27 @@
+      <%= render "devise/shared/error_messages", resource: resource %>
 <div class="container">
   <div class="text-center m-5">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "form-signup"}) do |f| %>
       <h2 class="form-signin-heading">Sign up</h2>
-      <%= render "devise/shared/error_messages", resource: resource %>
       <div class="field">
         <%= f.label :full_name, "Full Name", class: "sr-only" %><br/>
-        <%= f.text_field :full_name, autofocus: true, autocomplete: "full_name", class: "form-control-sm", placeholder: "Full name" %>
+        <%= f.text_field :full_name, autofocus: true, autocomplete: "full_name", class: "Default input", placeholder: "Full name" %>
       </div>
-
       <div class="field">
         <%= f.label :email, "Email Address", class: "sr-only" %><br/>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control-sm", placeholder: "Email Address" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "Default input", placeholder: "Email Address" %>
       </div>
-
       <div class="field">
         <%= f.label :password, "Password", class: "sr-only" %>
         <% if @minimum_password_length %>
         <em>(<%= @minimum_password_length %> characters minimum)</em>
         <% end %><br />
-        <%= f.password_field :password, autocomplete: "new-password", class: "form-control-sm", placeholder: "Password" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "Default input", placeholder: "Password" %>
       </div>
-
       <div class="field">
         <%= f.label :password_confirmation, "Password confirmation", class: "sr-only" %><br/>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control-sm", placeholder: "Password confirmation" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "Default input", placeholder: "Password confirmation" %>
       </div>
-
       <div class="actions"><br/>
         <%= f.submit "Sign up", class: "btn btn-primary btn-lg" %>
       </div>

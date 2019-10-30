@@ -3,12 +3,10 @@
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }, html: {class: "form-group"}) do |f| %>
       <h2 class="form-form-group-heading">Forgot your password?</h2>
       <%= render "devise/shared/error_messages", resource: resource %>
-
       <div class="field">
         <%= f.label :email, "Email Address", class: "sr-only" %><br/>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control-sm", placeholder: "Email Address" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "Default input", placeholder: "Email Address" %>
       </div>
-
       <div class="actions"><br/>
         <%= f.submit "Send me reset password instructions", class: "btn btn-primary btn-sm" %>
       </div>

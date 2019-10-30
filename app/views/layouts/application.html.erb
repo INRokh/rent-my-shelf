@@ -16,8 +16,12 @@
       <%= link_to "login", new_user_session_path %>
       <%= link_to "sign up", new_user_registration_path %>
     <% end %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice %>
+        <div class="alert alert-info" role="alert"><%= notice %></div>
+    <% end %>
+    <% if alert %>
+        <div class="alert alert-danger" role="alert"><%= alert %></div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
