@@ -1,0 +1,4 @@
+<p id="notice"><%= notice %></p>
+<%= @space.to_json %>
+<%= link_to "Edit", edit_space_path(@space) if current_user.id == @space.user_id %>
+<%= link_to 'Back', spaces_path %>

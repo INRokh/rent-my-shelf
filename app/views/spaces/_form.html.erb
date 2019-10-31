@@ -1,0 +1,55 @@
+<%= form_with(model: space, local: true) do |form| %>
+  <% if space.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(space.errors.count, "error") %> prohibited this space from being saved:</h2>
+
+      <ul>
+        <% space.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with model: space, local: true do |f| %>
+    <p>
+      <%= f.label :title %><br>
+      <%= f.text_field :title %>
+    </p>
+    <p>
+      <%= f.label :description %><br>
+      <%= f.text_area :description %>
+    </p>
+    <p>
+      <%= f.label :address %><br>
+      <%= f.text_area :address %>
+    </p>
+    <p>
+      <%= f.label :post_code %><br>
+      <%= f.text_area :post_code %>
+    </p>
+    <% for option in sizes %>
+      <p>
+        <%= form.radio_button :size, option %>
+        <%= form.label "size_#{option}".to_sym, option %>
+      </p>
+    <% end %>
+    <p>
+      <%= f.label :contact_info %><br>
+      <%= f.text_area :contact_info %>
+    </p>
+    <p>
+      <%= f.label :price%><br>
+      <%= f.text_area :price %>
+    </p>
+    <% for option in spaces_types %>
+      <p>
+        <%= form.radio_button :space_type, option %>
+        <%= form.label "space_type_#{option}".to_sym, option %>
+      </p>
+    <% end %>
+    <p>
+      <%= f.submit "Create" %>
+    </p>
+  <% end %>
+<% end %>
