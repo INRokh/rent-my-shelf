@@ -1,0 +1,55 @@
+
+<%= form_with(model: campaign, local: true) do |form| %>
+  <% if campaign.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(campaign.errors.count, "error") %> prohibited this campaign from being saved:</h2>
+
+      <ul>
+        <% campaign.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="container">
+    <div class="text-center m-5">
+      <div class="form-group">
+        <%= form_with model: campaign, local: true do |f| %>
+          <p>
+            <%= f.label :title %><br>
+            <%= f.text_field :title, class:"form-control", id:"exampleFormControlInput1" %>
+          </p>
+          <p>
+            <%= f.label :description  %><br>
+            <%= f.text_area :description,class:"form-control", id:"exampleFormControlTextarea1" %>
+          </p>
+          <p>
+            <%= f.label :start_date  %><br>
+            <%= f.date_field :start_date, class:"form-control", id:"exampleFormControlInput1" %>
+          </p>
+          <p>
+            <%= f.label :duration  %><br>
+            <%= f.number_field :duration, class:"form-control", id:"exampleFormControlInput1" %>
+          </p>
+
+          <p> 
+            <%= f.label :size %><br> 
+            <% for option in sizes %>
+              <%= form.radio_button :size, option %>
+              <%= form.label "size_#{option}".to_sym, option %>  
+            <% end %>
+          </p>
+
+          <p>
+            <%= f.label :contact_info %><br>
+            <%= f.text_area :contact_info, class:"form-control", id:"exampleFormControlInput1"  %>
+          </p>
+          <p>
+            <%= f.submit "Create" %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

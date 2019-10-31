@@ -28,6 +28,7 @@ class SpacesController < ApplicationController
         format.html { redirect_to @space, notice: 'Space was successfully created.' }
         format.json { render :show, status: :created, location: @space }
       else
+        @sizes = Space.sizes.keys
         format.html { render :new }
         format.json { render json: @space.errors, status: :unprocessable_entity }
       end

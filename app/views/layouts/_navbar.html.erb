@@ -7,7 +7,8 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <% if user_signed_in? %>
-                <%= link_to "Spaces", {controller: "spaces", action: "index"} , class: "nav-item nav-link" %>
+                    <%= link_to "Spaces", {controller: "spaces", action: "index"} , class: "nav-item nav-link" %>
+                    <%= link_to "Campaigns", {controller: "campaigns", action: "index"} , class: "nav-item nav-link" %>
                 <% end %>
             </div>
         </div>
