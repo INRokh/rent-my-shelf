@@ -2,3 +2,4 @@
 <%= @campaign.to_json %>
 <%= link_to "Edit", edit_campaign_path(@campaign) if current_user.id == @campaign.user_id %>
 <%= link_to 'Back', campaigns_path %>
+

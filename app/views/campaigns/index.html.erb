@@ -1,23 +1,23 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Campaigns</h1>
-<p>
-  <%= link_to 'New Campaign', new_campaign_path %>
-</p>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Description</th>
-  </tr>
-  <% @campaigns.each do |campaign| %>
-    <tr>
-      <td><%= campaign.title %></td>
-      <td><%= campaign.description %></td>
-      <td><%= link_to 'Show', campaign %></td>
-      <td><%= link_to 'Edit', edit_campaign_path(campaign) %></td>
-      <td><%= link_to 'Destroy', campaign, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-    </tr>
+<div>
+  <h1>List of current Cumpaigns</h1>
+  <button type="button" class="btn btn-light"><%= link_to 'Create a new Campaign', new_campaign_path %></button>
+</div>
+<div>
+    <% @user_campaigns.each do |campaign| %>
+      <div class="card w-75">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= campaign.title %></h5>
+          <h5 class="card-title"><%= campaign.status %></h5>
+          <h6 class="card-description"><%= campaign.start_date %></h6>
+          <h6 class="card-description"><%= campaign.end_date %></h6>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-link"><%= link_to 'Show', campaign %></button>
+          <button class="btn btn-link"><%= link_to 'Edit', edit_campaign_path(campaign) %></button>
+          <button class="btn btn-link"><%= link_to 'Delete', campaign, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+        </div>
+      </div>
     <% end %>
-  </tbody>
-</table>
+</div>
+

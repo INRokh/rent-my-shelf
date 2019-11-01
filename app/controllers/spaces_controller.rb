@@ -4,7 +4,7 @@ class SpacesController < ApplicationController
   before_action :set_user_space, only: [:edit, :update, :destroy]
 
   def index
-    @spaces = Space.all
+    @user_spaces = current_user.spaces
   end
 
   def show

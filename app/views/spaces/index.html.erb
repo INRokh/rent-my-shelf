@@ -1,24 +1,31 @@
-<p id="notice"><%= notice %></p>
-  <h1>Spaces</h1>
-<p>
-  <%= link_to 'New Space', new_space_path %>
-</p>
-
-<table>
-   <tr>
-        <th>Name</th>
-        <th>Description</th>
-    </tr>
-    <% @spaces.each do |space| %>
-      <tr>
-        <td><%= space.title %></td>
-        <td><%= space.description %></td>
-        <td><%= link_to 'Show', space %></td>
-        <td><%= link_to 'Edit', edit_space_path(space) %></td>
-        <td><%= link_to 'Destroy', space, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<div>
+  <h1>List of Spaces</h1>
+  <button type="button" class="btn btn-light"><%= link_to 'Create a new Space', new_space_path %></button>
+</div>
+<div>
+    <% @user_spaces.each do |space| %>
+      <div class="card w-75">
+        <img src="..." class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= space.title %></h5>
+          <h6 class="card-description"><%= space.description %></h6>
+          <h6 class="card-description"><%= space.address %></h6>
+        </div>
+        <div class="card-body">
+          <button class="btn btn-link"><%= link_to 'Show', space %></button>
+          <button class="btn btn-link"><%= link_to 'Edit', edit_space_path(space) %></button>
+          <button class="btn btn-link"><%= link_to 'Delete', space, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+        </div>
+      </div>
     <% end %>
-</table>
+</div>
+
+
+
+
+    
+
+
 
 
 

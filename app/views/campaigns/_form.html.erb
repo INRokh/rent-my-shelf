@@ -29,10 +29,9 @@
             <%= f.date_field :start_date, class:"form-control", id:"exampleFormControlInput1" %>
           </p>
           <p>
-            <%= f.label :duration  %><br>
-            <%= f.number_field :duration, class:"form-control", id:"exampleFormControlInput1" %>
+            <%= f.label :end_date  %><br>
+            <%= f.date_field :end_date, class:"form-control", id:"exampleFormControlInput1" %>
           </p>
-
           <p> 
             <%= f.label :size %><br> 
             <% for option in sizes %>
@@ -40,7 +39,6 @@
               <%= form.label "size_#{option}".to_sym, option %>  
             <% end %>
           </p>
-
           <p>
             <%= f.label :contact_info %><br>
             <%= f.text_area :contact_info, class:"form-control", id:"exampleFormControlInput1"  %>

@@ -4,7 +4,7 @@ class CampaignsController < ApplicationController
   before_action :set_user_campaign, only: [:edit, :update, :destroy]
 
   def index
-    @campaigns = Campaign.all
+    @user_campaigns = current_user.campaigns
   end
 
   def show
@@ -61,7 +61,7 @@ class CampaignsController < ApplicationController
     end
 
     def campaign_params
-      params.require(:campaign).permit(:title, :description, :start_date, :duration, :size, :contact_info)
+      params.require(:campaign).permit(:title, :description, :start_date, :end_date, :duration, :size, :contact_info)
     end
 
     def set_user_campaign
