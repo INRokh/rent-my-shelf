@@ -1,7 +1,6 @@
 class SpacesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_space, only: [:show]
-  before_action :set_user_space, only: [:edit, :update, :destroy]
+  before_action :set_user_space, only: [:edit, :update, :destroy, :show]
 
   def index
     @user_spaces = current_user.spaces
@@ -58,10 +57,6 @@ class SpacesController < ApplicationController
   end
 
   private
-
-    def set_space
-      @space = Space.find(params[:id])
-    end
 
     def space_params
       params.require(:space).permit(:title, :description, :address, :post_code,

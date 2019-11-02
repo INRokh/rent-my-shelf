@@ -35,8 +35,8 @@
           <p> 
             <%= f.label :size %><br> 
             <% for option in sizes %>
-              <%= form.radio_button :size, option %>
-              <%= form.label "size_#{option}".to_sym, option %>  
+              <%= f.radio_button :size, option %>
+              <%= f.label "size_#{option}".to_sym, option %>  
             <% end %>
           </p>
           <p>
@@ -44,13 +44,10 @@
             <%= f.text_area :contact_info, class:"form-control", id:"exampleFormControlInput1"  %>
           </p>
           <p>
-            <%= form.collection_check_boxes :product_ids, products, :id, :name %>
+            <%= f.collection_check_boxes :product_ids, products, :id, :name %>
           </p>
           <p>
-          <%= spaces.to_json %>
-          </p>
-          <p>
-            <%= f.submit %>
+            <%= f.submit class: 'btn btn-primary' %>
           </p>
         <% end %>
       </div>

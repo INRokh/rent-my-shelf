@@ -1,7 +1,6 @@
 class CampaignsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_campaign, only: [:show]
-  before_action :set_user_campaign, only: [:edit, :update, :destroy]
+  before_action :set_user_campaign, only: [:edit, :update, :destroy, :show]
 
   def index
     @user_campaigns = current_user.campaigns
@@ -19,9 +18,6 @@ class CampaignsController < ApplicationController
   def edit
     @sizes = Campaign.sizes.keys
     @products = Product.all
-    p @campaign.size
-    @spaces = Space.suitable_for_campaign(
-      @campaign.size, @campaign.product_ids)
   end
 
   def create
@@ -60,10 +56,6 @@ class CampaignsController < ApplicationController
   end
 
   private
-
-    def set_campaign
-      @campaign = Campaign.find(params[:id])
-    end
 
     def campaign_params
       params.require(:campaign).permit(:title, :description, :start_date, :end_date, :duration, :size, :contact_info, product_ids: [])
