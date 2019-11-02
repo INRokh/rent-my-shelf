@@ -12,6 +12,7 @@ class SpacesController < ApplicationController
 
   def new
     @space = Space.new
+    @products = Product.all
     @spaces_types = Space.space_types.keys
     @sizes = Space.sizes.keys
   end
@@ -19,6 +20,7 @@ class SpacesController < ApplicationController
   def edit
     @spaces_types = Space.space_types.keys
     @sizes = Space.sizes.keys
+    @products = Product.all
   end
 
   def create
@@ -63,7 +65,7 @@ class SpacesController < ApplicationController
 
     def space_params
       params.require(:space).permit(:title, :description, :address, :post_code,
-      :contact_info, :price, :space_type, :size)
+      :contact_info, :price, :space_type, :size, product_ids: [])
     end
 
     def set_user_space

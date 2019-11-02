@@ -12,11 +12,13 @@ class CampaignsController < ApplicationController
 
   def new
     @campaign = Campaign.new
+    @products = Product.all
     @sizes = Campaign.sizes.keys
   end
 
   def edit
     @sizes = Campaign.sizes.keys
+    @products = Product.all
   end
 
   def create
@@ -61,7 +63,7 @@ class CampaignsController < ApplicationController
     end
 
     def campaign_params
-      params.require(:campaign).permit(:title, :description, :start_date, :end_date, :duration, :size, :contact_info)
+      params.require(:campaign).permit(:title, :description, :start_date, :end_date, :duration, :size, :contact_info, product_ids: [])
     end
 
     def set_user_campaign

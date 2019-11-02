@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Testrails</title>
+    <title>Rent My Shelf</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -10,12 +10,14 @@
 
   <body>
     <%= render "layouts/navbar" %>
-    <% if notice %>
+    <div class="container">
+      <% if notice %>
         <div class="alert alert-info" role="alert"><%= notice %></div>
-    <% end %>
-    <% if alert %>
-        <div class="alert alert-danger" role="alert"><%= alert %></div>
-    <% end %>
-    <%= yield %>
+      <% end %>
+      <% if alert %>
+          <div class="alert alert-danger" role="alert"><%= alert %></div>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>

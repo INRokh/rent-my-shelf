@@ -55,7 +55,10 @@
             <% end %>
           </p>
           <p>
-            <%= f.submit "Create" %>
+           <%= form.collection_check_boxes :product_ids, products, :id, :name %>
+          </p>
+          <p>
+            <%= f.submit %>
           </p>
         <% end %>
       </div>
