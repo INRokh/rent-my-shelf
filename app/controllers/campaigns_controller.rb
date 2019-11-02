@@ -19,6 +19,9 @@ class CampaignsController < ApplicationController
   def edit
     @sizes = Campaign.sizes.keys
     @products = Product.all
+    p @campaign.size
+    @spaces = Space.suitable_for_campaign(
+      @campaign.size, @campaign.product_ids)
   end
 
   def create
