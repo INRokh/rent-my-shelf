@@ -4,5 +4,28 @@
 
 <%= @spaces.to_json %>
 
-<%= link_to "Back", edit_campaign_path(@campaign) %>
+<div>
+  <h1>List of Spaces</h1>
+</div>
+<div>
+    <% @spaces.each do |space| %>
+        <div class="card w-75">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title"><%= space.title %></h5>
+                <h6 class="card-description"><%= space.description %></h6>
+                <h6 class="card-description"><%= space.address %></h6>
+            </div>
+            <div class="card-body">
+                <% if @linked_spaces.include?(space.id) %>
+                    <%= button_to 'Delete', space_selector_path, method: :delete, params: {space_id: space.id} %>
+                <% else %>
+                    <%= button_to 'Add', space_selector_path, method: :post, params: {space_id: space.id} %> 
+                <% end %>
+            </div>
+        </div>
+    <% end %>
+</div>
+
+<%= link_to "Back to campaign", @campaign %>
 
