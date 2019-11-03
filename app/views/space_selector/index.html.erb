@@ -5,9 +5,15 @@
 <%= @spaces.to_json %>
 
 <div>
-  <h1>List of Spaces</h1>
+    <h1>List of Spaces</h1>
 </div>
+
 <div>
+    <%= form_with(url: space_selector_path, method: :get, local: true) do %>
+        <%= label_tag(:post_code, "Post code:") %>
+        <%= text_field_tag(:post_code, @post_code) %>
+        <%= submit_tag("Search") %>
+    <% end %>
     <% @spaces.each do |space| %>
         <div class="card w-75">
             <img src="..." class="card-img-top" alt="...">
@@ -18,9 +24,9 @@
             </div>
             <div class="card-body">
                 <% if @linked_spaces.include?(space.id) %>
-                    <%= button_to 'Delete', space_selector_path, method: :delete, params: {space_id: space.id} %>
+                    <%= button_to 'Delete', space_selector_path, method: :delete, params: {space_id: space.id, post_code: params[:post_code]} %>
                 <% else %>
-                    <%= button_to 'Add', space_selector_path, method: :post, params: {space_id: space.id} %> 
+                    <%= button_to 'Add', space_selector_path, method: :post, params: {space_id: space.id, post_code: params[:post_code]} %> 
                 <% end %>
             </div>
         </div>
@@ -28,4 +34,3 @@
 </div>
 
 <%= link_to "Back to campaign", @campaign %>
-

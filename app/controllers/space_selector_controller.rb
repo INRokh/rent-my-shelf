@@ -2,13 +2,14 @@ class SpaceSelectorController < ApplicationController
     before_action :authenticate_user!
     before_action :set_user_campaign
 
-    def campaign_info
-
-    end
-
     def index
         @spaces = Space.suitable_for_campaign(
             @campaign.size, @campaign.product_ids)
+        if params[:post_code] && !params[:post_code].empty?
+            @spaces = @spaces.where(post_code: params[:post_code])
+            @post_code = params[:post_code]
+        end
+
         @linked_spaces = Set.new
         @campaign.spaces.each do |space|
             @linked_spaces << space.id
@@ -22,32 +23,27 @@ class SpaceSelectorController < ApplicationController
             space_id = get_space_id.to_i
             space = @spaces.find { |s| s.id == space_id }
           if space == nil
-              format.html { redirect_to space_selector, alert: 'Space is not found.' }
+              format.html { redirect_to space_selector_url(post_code: params[:post_code]), alert: 'Space is not found.' }
           elsif @campaign.spaces.find { |s| s.id == space_id }
-              format.html { redirect_to space_selector_url, alert: 'Space is already linked.' }
+              format.html { redirect_to space_selector_url(post_code: params[:post_code]), alert: 'Space is already linked.' }
           else
               @campaign.spaces << space
-              format.html { redirect_to space_selector_url, notice: 'Space is added.' }
+              format.html { redirect_to space_selector_url(post_code: params[:post_code]), notice: 'Space is added.' }
           end
         end
     end
 
     def unlink
-        @spaces = Space.suitable_for_campaign(
-            @campaign.size, @campaign.product_ids)
         respond_to do |format|
             space_id = get_space_id.to_i
             space = @campaign.spaces.find_by_id(space_id)
             if space == nil
-                format.html { redirect_to space_selector_url, alert: 'Space is not found.' }
+                format.html { redirect_to space_selector_url(post_code: params[:post_code]), alert: 'Space is not found.' }
             else
                 @campaign.spaces.delete(space)
-                format.html { redirect_to space_selector_url, notice: 'Space is removed.' }
+                format.html { redirect_to space_selector_url(post_code: params[:post_code]), notice: 'Space is removed.' }
             end
         end
-    end
-
-    def search
     end
 
     private
