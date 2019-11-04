@@ -58,7 +58,16 @@ class CampaignsController < ApplicationController
   private
 
     def campaign_params
-      params.require(:campaign).permit(:title, :description, :start_date, :end_date, :duration, :size, :contact_info, product_ids: [])
+      params.require(:campaign).permit(
+        :title, 
+        :description, 
+        :start_date, 
+        :end_date, 
+        :duration, 
+        :size, 
+        :contact_info, 
+        product_ids: []
+      )
     end
 
     def set_user_campaign
