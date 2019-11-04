@@ -46,8 +46,6 @@ The main user of the system is the party that wants to rent a space (shelf) for 
 
 High level design covers basic features of the service. The application serves the traffic using PostgreSQL as a DB and AWS S3 as a storage for media objects (images). Mailer job sends periodic notifications about campaigns. Thumbnail Generator job performs media processing. The client code uses Google Maps to render the map with space locations.
 
-![](readme_resources/hld.png)
-
 ## Data model
 
 Campaign represent promotion campaign defined by the start date and duration. The campaign includes one or more spaces. Products promoted by this campaign will be displayed in these spaces. Campaign maintains basics per space stats. Campagnie can be in one of these states: 
