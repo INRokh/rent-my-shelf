@@ -70,3 +70,15 @@ __Space category__ defines a type of the space, for example shops, cafes, bars e
 ## UI mockups
 
 
+## Ruby gems
+
+gem "devise", "~> 4.7"
+
+gem "bootstrap", "~> 4.3"
+
+gem "jquery-rails", "~> 4.3"
+
+gem "aws-sdk-s3", "~> 1.53"
+
+gem "mini_magick", "~> 4.9"
+
