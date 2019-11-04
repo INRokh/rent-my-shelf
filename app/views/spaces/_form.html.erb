@@ -35,8 +35,8 @@
           <p> 
             <%= f.label :size %><br> 
             <% for option in sizes %>
-              <%= form.radio_button :size, option %>
-              <%= form.label "size_#{option}".to_sym, option %>
+              <%= f.radio_button :size, option %>
+              <%= f.label "size_#{option}".to_sym, option %>
             <% end %>
           </p>
           <p>
@@ -50,12 +50,16 @@
           <p>
             <%= f.label :space_type %><br> 
             <% for option in spaces_types %>
-              <%= form.radio_button :space_type, option %>
-              <%= form.label "space_type_#{option}".to_sym, option %>
+              <%= f.radio_button :space_type, option %>
+              <%= f.label "space_type_#{option}".to_sym, option %>
             <% end %>
           </p>
           <p>
-           <%= form.collection_check_boxes :product_ids, products, :id, :name %>
+           <%= f.collection_check_boxes :product_ids, products, :id, :name %>
+          </p>
+          <p>
+            <%= form.label :image %>
+            <%= form.file_field :image, accept: "image/png,image/gif,image/jpeg,image/jpg" %>
           </p>
           <p>
             <%= f.submit %>

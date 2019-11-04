@@ -60,7 +60,7 @@ class SpacesController < ApplicationController
 
     def space_params
       params.require(:space).permit(:title, :description, :address, :post_code,
-      :contact_info, :price, :space_type, :size, product_ids: [])
+      :contact_info, :price, :space_type, :size, :image, product_ids: [])
     end
 
     def set_user_space
