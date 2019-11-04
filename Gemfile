@@ -68,3 +68,5 @@ gem "bootstrap", "~> 4.3"
 gem "jquery-rails", "~> 4.3"
 
 gem "aws-sdk-s3", "~> 1.53"
+
+gem "mini_magick", "~> 4.9"
