@@ -1,12 +1,18 @@
 <h1>Space selector</h1>
 
-<p><%= @campaign.to_json %></p>
-
-<%= @spaces.to_json %>
+<div class="card w-75">
+    <div class="card-body">
+        <h5 class="card-title"><%= @campaign.title %></h5>
+        <h5 class="card-title"><%= @campaign.status %></h5>
+        <h6 class="card-description"><%= @campaign.start_date %></h6>
+        <h6 class="card-description"><%= @campaign.end_date %></h6>
+    </div>
+</div>
 
 <div>
     <h1>List of Spaces</h1>
 </div>
+<%= link_to "Back to campaign", @campaign %>
 
 <div>
     <%= form_with(url: space_selector_path, method: :get, local: true) do %>
@@ -16,7 +22,7 @@
     <% end %>
     <% @spaces.each do |space| %>
         <div class="card w-75">
-            <img src="..." class="card-img-top" alt="...">
+            <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached? %>
             <div class="card-body">
                 <h5 class="card-title"><%= space.title %></h5>
                 <h6 class="card-description"><%= space.description %></h6>
@@ -32,5 +38,3 @@
         </div>
     <% end %>
 </div>
-
-<%= link_to "Back to campaign", @campaign %>

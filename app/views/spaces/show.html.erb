@@ -1,4 +1,31 @@
-<p id="notice"><%= notice %></p>
-<%= @space.to_json %>
 <%= link_to "Edit", edit_space_path(@space) if current_user.id == @space.user_id %>
 <%= link_to 'Back', spaces_path %>
+
+<p>
+    <h3>Space</h3>
+</p>
+<div class="card w-75">
+    <div class="card-body">
+        <%= image_tag @space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if @space.image.attached? %>
+        <h5 class="card-title"><%= @space.title %></h5>
+        <h6 class="card-description"><%= @space.description %></h6>
+        <h6 class="card-description"><%= @space.address %></h6>
+    </div>
+</div>
+
+<p>
+    <h3>Campaigns</h3>
+</p>
+
+<div>
+    <% @space.campaigns.each do |campaign| %>
+        <div class="card w-75">
+            <div class="card-body">
+                <h5 class="card-title"><%= campaign.title %></h5>
+                <h6 class="card-description"><%= campaign.description %></h6>
+                <h6 class="card-description"><%= campaign.status %></h6>
+                <h6 class="card-description"><%= campaign.start_date %></h6>
+            </div>
+        </div>
+    <% end %>
+</div>

@@ -7,7 +7,13 @@ class CampaignsController < ApplicationController
   end
 
   def show
+    @total = Campaign.first.spaces.sum(:price)
   end
+
+  # def pay
+  #   @campaign = Campaign.find(params[:id])
+  #   @campaign.in_progress!
+  # end
 
   def new
     @campaign = Campaign.new
@@ -22,6 +28,7 @@ class CampaignsController < ApplicationController
 
   def create
     @campaign = current_user.campaigns.create(campaign_params)
+    @campaign.new_campaign!
    
     respond_to do |format|
       if @campaign.save
@@ -65,6 +72,7 @@ class CampaignsController < ApplicationController
         :end_date, 
         :duration, 
         :size, 
+        :status,
         :contact_info, 
         product_ids: []
       )

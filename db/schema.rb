@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_04_005959) do
+ActiveRecord::Schema.define(version: 2019_11_05_045630) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,6 +68,25 @@ ActiveRecord::Schema.define(version: 2019_11_04_005959) do
     t.index ["space_id"], name: "index_campaigns_spaces_on_space_id"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.integer "strip_id"
+    t.integer "total"
+    t.bigint "campaign_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["campaign_id"], name: "index_orders_on_campaign_id"
+  end
+
+  create_table "orders_spaces", force: :cascade do |t|
+    t.integer "price"
+    t.bigint "order_id"
+    t.bigint "space_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_orders_spaces_on_order_id"
+    t.index ["space_id"], name: "index_orders_spaces_on_space_id"
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -117,6 +136,9 @@ ActiveRecord::Schema.define(version: 2019_11_04_005959) do
   add_foreign_key "campaigns_products", "products"
   add_foreign_key "campaigns_spaces", "campaigns"
   add_foreign_key "campaigns_spaces", "spaces"
+  add_foreign_key "orders", "campaigns"
+  add_foreign_key "orders_spaces", "orders"
+  add_foreign_key "orders_spaces", "spaces"
   add_foreign_key "products_spaces", "products"
   add_foreign_key "products_spaces", "spaces"
   add_foreign_key "spaces", "users"
