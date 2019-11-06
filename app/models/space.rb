@@ -3,6 +3,7 @@ class Space < ApplicationRecord
     has_and_belongs_to_many :campaigns
     has_and_belongs_to_many :products
     has_one_attached :image
+    has_many :order_spaces
     enum space_type: { shop: 0, cafe: 1, bar: 2, library: 3 }
     enum size: { small: 1, medium: 0, large: 2, extra_large: 3 }
 

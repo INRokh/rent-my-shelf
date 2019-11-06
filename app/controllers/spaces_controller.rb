@@ -23,6 +23,7 @@ class SpacesController < ApplicationController
   end
 
   def create
+    # params[:space][:price] = (params[:space][:price].to_f * 100)
     @space = current_user.spaces.create(space_params)
     respond_to do |format|
       if @space.save

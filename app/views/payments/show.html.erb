@@ -1,0 +1,52 @@
+
+<div>
+  <%= link_to "Edit campaign", edit_campaign_path(@campaign) if current_user.id == @campaign.user_id %> |
+  <%= link_to "Back to campaigns", campaigns_path %> |
+</div>
+
+<div>
+  <button data-stripe="payment">buy<%= @campaign.total_price %></button>
+</div>
+
+<script src="https://js.stripe.com/v3/"></script>
+
+<script>
+  document
+    .querySelector("[data-stripe='payment']")
+      .addEventListener("click", () => {
+        const stripe = Stripe("<%= @public_key %>");
+        stripe.redirectToCheckout({
+          sessionId: "<%= @session_id %>"
+      });
+    });
+</script>
+
+
+<div class="card w-75">
+  <div class="card-body">
+    <h5 class="card-title"><%= @campaign.title %></h5>
+    <h5 class="card-title"><%= @campaign.status %></h5>
+    <h6 class="card-description"><%= @campaign.start_date %></h6>
+    <h6 class="card-description"><%= @campaign.end_date %></h6>
+  </div>
+</div>
+
+<p>
+  <h2>Spaces</h2>
+  <h3><%= @total %></h3>
+</p>
+
+<div>
+  <% @campaign.spaces.each do |space| %>
+    <div class="card w-75">
+        <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached?  %>
+      <div class="card-body">
+        <h5 class="card-title"><%= space.title %></h5>
+        <h6 class="card-dtest"><%= space.description %></h6>
+        <h6 class="card-text"><%= space.address %></h6>
+        <h6 class="card-text"><%= space.price %></h6>
+      </div>
+    </div>
+  <% end %>
+</div>
+

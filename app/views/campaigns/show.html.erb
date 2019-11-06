@@ -2,6 +2,7 @@
 <div>
     <%= link_to "Edit campaign", edit_campaign_path(@campaign) if current_user.id == @campaign.user_id %> |
     <%= link_to "Back to campaigns", campaigns_path %> |
+    <%= link_to "Checkout", payment_path(@campaign) %> |
     
 </div>
 

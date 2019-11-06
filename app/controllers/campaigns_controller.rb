@@ -7,13 +7,7 @@ class CampaignsController < ApplicationController
   end
 
   def show
-    @total = Campaign.first.spaces.sum(:price)
   end
-
-  # def pay
-  #   @campaign = Campaign.find(params[:id])
-  #   @campaign.in_progress!
-  # end
 
   def new
     @campaign = Campaign.new
@@ -22,43 +16,68 @@ class CampaignsController < ApplicationController
   end
 
   def edit
-    @sizes = Campaign.sizes.keys
-    @products = Product.all
+    if @campaign.status_new?
+      @sizes = Campaign.sizes.keys
+      @products = Product.all
+    else
+      respond_to do |format|
+          format.html {
+              redirect_to @campaign,
+              alert: "Campaign can't be edited."
+        }
+      end
+    end
   end
 
   def create
     @campaign = current_user.campaigns.create(campaign_params)
-    @campaign.new_campaign!
-   
+    @campaign.status_new!
+  
     respond_to do |format|
       if @campaign.save
-        format.html { redirect_to @campaign, notice: 'Campaign was successfully created.' }
-        format.json { render :show, status: :created, location: @campaign }
+        format.html {
+          redirect_to @campaign,
+          notice:"Campaign was successfully created."
+        }
       else
         @sizes = Campaign.sizes.keys
         format.html { render :new }
-        format.json { render json: @campaign.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
     respond_to do |format|
-      if @campaign.update(campaign_params)
-        format.html { redirect_to @campaign, notice: 'Campaign was successfully updated.' }
-        format.json { render :show, status: :ok, location: @campaign }
+      if !@campaign.status_new?
+        format.html format.html {
+          redirect_to @campaign,
+          alert: "Campaign can't be modified."
+        }
+      elsif @campaign.update(campaign_params)
+        format.html {
+          redirect_to @campaign,
+          notice: "Campaign was successfully updated."
+        }
       else
         format.html { render :edit }
-        format.json { render json: @campaign.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @campaign.destroy
-    respond_to do |format|
-      format.html { redirect_to campaigns_url, notice: 'Campaign was successfully destroyed.' }
-      format.json { head :no_content }
+    if !@campaign.status_new?
+      format.html format.html {
+        redirect_to @campaign,
+        alert: "Campaign can't be deleted."
+      }
+    else
+      @campaign.destroy
+      respond_to do |format|
+        format.html {
+            redirect_to campaigns_url,
+            notice: "Campaign was successfully destroyed."
+        }
+      end
     end
   end
 

@@ -1,40 +1,42 @@
 <h1>Space selector</h1>
 
 <div class="card w-75">
-    <div class="card-body">
-        <h5 class="card-title"><%= @campaign.title %></h5>
-        <h5 class="card-title"><%= @campaign.status %></h5>
-        <h6 class="card-description"><%= @campaign.start_date %></h6>
-        <h6 class="card-description"><%= @campaign.end_date %></h6>
-    </div>
+  <div class="card-body">
+    <h5 class="card-title"><%= @campaign.title %></h5>
+    <h5 class="card-title"><%= @campaign.status %></h5>
+    <h6 class="card-description"><%= @campaign.start_date %></h6>
+    <h6 class="card-description"><%= @campaign.end_date %></h6>
+  </div>
 </div>
 
 <div>
-    <h1>List of Spaces</h1>
+  <h1>List of Spaces</h1>
 </div>
+
 <%= link_to "Back to campaign", @campaign %>
 
 <div>
-    <%= form_with(url: space_selector_path, method: :get, local: true) do %>
-        <%= label_tag(:post_code, "Post code:") %>
-        <%= text_field_tag(:post_code, @post_code) %>
-        <%= submit_tag("Search") %>
-    <% end %>
-    <% @spaces.each do |space| %>
-        <div class="card w-75">
-            <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached? %>
-            <div class="card-body">
-                <h5 class="card-title"><%= space.title %></h5>
-                <h6 class="card-description"><%= space.description %></h6>
-                <h6 class="card-description"><%= space.address %></h6>
-            </div>
-            <div class="card-body">
-                <% if @linked_spaces.include?(space.id) %>
-                    <%= button_to 'Delete', space_selector_path, method: :delete, params: {space_id: space.id, post_code: params[:post_code]} %>
-                <% else %>
-                    <%= button_to 'Add', space_selector_path, method: :post, params: {space_id: space.id, post_code: params[:post_code]} %> 
-                <% end %>
-            </div>
-        </div>
-    <% end %>
+  <%= form_with(url: space_selector_path, method: :get, local: true) do %>
+    <%= label_tag(:post_code, "Post code:") %>
+    <%= text_field_tag(:post_code, @post_code) %>
+    <%= submit_tag("Search") %>
+  <% end %>
+
+  <% @spaces.each do |space| %>
+    <div class="card w-75">
+      <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached? %>
+      <div class="card-body">
+        <h5 class="card-title"><%= space.title %></h5>
+        <h6 class="card-description"><%= space.description %></h6>
+        <h6 class="card-description"><%= space.address %></h6>
+      </div>
+      <div class="card-body">
+        <% if @linked_spaces.include?(space.id) %>
+            <%= button_to 'Delete', space_selector_path, method: :delete, params: {space_id: space.id, post_code: params[:post_code]} %>
+        <% else %>
+            <%= button_to 'Add', space_selector_path, method: :post, params: {space_id: space.id, post_code: params[:post_code]} %> 
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>
