@@ -3,8 +3,6 @@ class Campaign < ApplicationRecord
   has_one :order
   has_and_belongs_to_many :spaces
   has_and_belongs_to_many :products
-  # validates :title, :size, :start_date, :end_date, :contact_info, presence: true
-  # # validates :size, inclusion: { in: @sizes.keys }
  
   enum size: { 
     small: 0, 
