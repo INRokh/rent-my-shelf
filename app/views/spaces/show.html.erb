@@ -20,7 +20,7 @@
 
 <div>
   <% @space.campaigns.each do |campaign| %>
-    <% if campaign.status == "ready" %>
+    <% if campaign.status_ready? %>
       <div class="card w-75">
         <div class="card-body">
           <h5 class="card-title"><%= campaign.title %></h5>

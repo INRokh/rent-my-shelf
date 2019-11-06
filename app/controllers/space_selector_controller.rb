@@ -23,12 +23,12 @@ class SpaceSelectorController < ApplicationController
       space_id = get_space_id.to_i
       space = @spaces.find { |s| s.id == space_id }
       if space == nil
-          format.html { redirect_to space_selector_url(post_code: params[:post_code]), alert: 'Space is not found.' }
+        format.html { redirect_to space_selector_url(post_code: params[:post_code]), alert: 'Space is not found.' }
       elsif @campaign.spaces.find { |s| s.id == space_id }
-          format.html { redirect_to space_selector_url(post_code: params[:post_code]), alert: 'Space is already linked.' }
+        format.html { redirect_to space_selector_url(post_code: params[:post_code]), alert: 'Space is already linked.' }
       else
-          @campaign.spaces << space
-          format.html { redirect_to space_selector_url(post_code: params[:post_code]), notice: 'Space is added.' }
+        @campaign.spaces << space
+        format.html { redirect_to space_selector_url(post_code: params[:post_code]), notice: 'Space is added.' }
       end
     end
   end

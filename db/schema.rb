@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_05_045630) do
+ActiveRecord::Schema.define(version: 2019_11_06_123344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,11 +69,11 @@ ActiveRecord::Schema.define(version: 2019_11_05_045630) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "strip_id"
     t.integer "total"
     t.bigint "campaign_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_id"
     t.index ["campaign_id"], name: "index_orders_on_campaign_id"
   end
 
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 2019_11_05_045630) do
     t.integer "size"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_active"
     t.index ["user_id"], name: "index_spaces_on_user_id"
   end
 

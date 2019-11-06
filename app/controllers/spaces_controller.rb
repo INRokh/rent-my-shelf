@@ -11,28 +11,21 @@ class SpacesController < ApplicationController
 
   def new
     @space = Space.new
-    @products = Product.all
-    @spaces_types = Space.space_types.keys
-    @sizes = Space.sizes.keys
+    set_space_properties
   end
 
   def edit
-    @spaces_types = Space.space_types.keys
-    @sizes = Space.sizes.keys
-    @products = Product.all
+    set_space_properties
   end
 
   def create
-    # params[:space][:price] = (params[:space][:price].to_f * 100)
     @space = current_user.spaces.create(space_params)
     respond_to do |format|
       if @space.save
-        format.html { redirect_to @space, notice: 'Space was successfully created.' }
-        format.json { render :show, status: :created, location: @space }
+        format.html { redirect_to @space, notice: "Space was successfully created." }
       else
-        @sizes = Space.sizes.keys
+        set_space_properties
         format.html { render :new }
-        format.json { render json: @space.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -40,20 +33,22 @@ class SpacesController < ApplicationController
   def update
     respond_to do |format|
       if @space.update(space_params)
-        format.html { redirect_to @space, notice: 'Space was successfully updated.' }
-        format.json { render :show, status: :ok, location: @space }
+        format.html { redirect_to @space, notice: "Space was successfully updated." }
       else
+        set_space_properties
         format.html { render :edit }
-        format.json { render json: @space.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def destroy
-    @space.destroy
     respond_to do |format|
-      format.html { redirect_to spaces_url, notice: 'Space was successfully destroyed.' }
-      format.json { head :no_content }
+      if @space.campaigns.count == 0
+        @space.destroy
+        format.html { redirect_to spaces_url, notice: "Space was successfully destroyed." }
+      else
+        format.html { redirect_to @space, alert: "Space has campaigns. Can't destroy." }
+      end
     end
   end
 
@@ -70,6 +65,7 @@ class SpacesController < ApplicationController
         :space_type, 
         :size, 
         :image, 
+        :is_active,
         product_ids: []
       )
     end
@@ -79,5 +75,11 @@ class SpacesController < ApplicationController
       if @space == nil
         redirect_to space_path
       end
+    end
+
+    def set_space_properties 
+      @products = Product.all
+      @spaces_types = Space.space_types.keys
+      @sizes = Space.sizes.keys
     end
 end

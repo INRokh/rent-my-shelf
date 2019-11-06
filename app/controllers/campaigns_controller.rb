@@ -25,22 +25,23 @@ class CampaignsController < ApplicationController
               redirect_to @campaign,
               alert: "Campaign can't be edited."
         }
+        
       end
     end
   end
 
   def create
     @campaign = current_user.campaigns.create(campaign_params)
-    @campaign.status_new!
-  
     respond_to do |format|
       if @campaign.save
+        @campaign.status_new!
         format.html {
           redirect_to @campaign,
           notice:"Campaign was successfully created."
         }
       else
         @sizes = Campaign.sizes.keys
+        @products = Product.all
         format.html { render :new }
       end
     end
@@ -65,14 +66,14 @@ class CampaignsController < ApplicationController
   end
 
   def destroy
-    if !@campaign.status_new?
-      format.html format.html {
-        redirect_to @campaign,
-        alert: "Campaign can't be deleted."
-      }
-    else
-      @campaign.destroy
-      respond_to do |format|
+    respond_to do |format|
+      if !@campaign.status_new?
+        format.html {
+          redirect_to @campaign,
+          alert: "Campaign can't be deleted."
+        }
+      else
+        @campaign.destroy
         format.html {
             redirect_to campaigns_url,
             notice: "Campaign was successfully destroyed."

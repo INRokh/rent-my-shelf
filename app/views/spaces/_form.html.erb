@@ -21,6 +21,10 @@
             <%= f.text_field :title, class: "form-control", id: "exampleFormControlInput1" %>
           </p>
           <p>
+           <%= f.label :is_active %><br>
+            <%= f.check_box :is_active %>
+          </p>
+          <p>
             <%= f.label :description  %><br>
             <%= f.text_area :description,class: "form-control", id: "exampleFormControlTextarea1"%>
           </p>

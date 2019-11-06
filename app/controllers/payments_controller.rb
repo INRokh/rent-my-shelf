@@ -1,5 +1,5 @@
 class PaymentsController < ApplicationController
-  before_action :set_user_campaign, only: [:show, :success]
+  before_action :set_user_campaign, only: [:show, :success, :cancel]
   skip_before_action :verify_authenticity_token, only: [:webhook]
 
   def show
@@ -9,7 +9,6 @@ class PaymentsController < ApplicationController
       line_items: [
         {
           name: @campaign.title,
-          description: @campaign.description,
           amount: @campaign.total_price * 100,  # Cents.
           currency: "aud",
           quantity: 1
@@ -39,7 +38,7 @@ class PaymentsController < ApplicationController
         }
       else
         format.html {
-          respond_to @campaign,
+          redirect_to @campaign,
           alert: "Campaign has a wrong status: " + @campaign.status
         }
       end
@@ -83,6 +82,11 @@ class PaymentsController < ApplicationController
         format.html {
           redirect_to @campaign,
           notice: "Payment is being confirmed."
+        }
+      elsif @campaign.status_ready?
+        format.html {
+          redirect_to @campaign,
+          notice: "Payment confirmed."
         }
       else
         format.html {
