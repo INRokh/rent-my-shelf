@@ -53,7 +53,7 @@ class PaymentsController < ApplicationController
 
     order = Order.create(
       campaign_id: campaign_id,
-      strip_id: payment_id,
+      stripe_id: payment_id,
       total: payment.amount / 100
     )
 
