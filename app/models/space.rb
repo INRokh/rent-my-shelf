@@ -5,6 +5,7 @@ class Space < ApplicationRecord
   has_one_attached :image
   has_many :order_spaces
   validates :title, :size, :contact_info, :post_code, :price, :space_type, :address, :products, presence: true
+  validates :price, numericality: { greater_than: 0 }
   enum space_type: { shop: 0, cafe: 1, bar: 2, library: 3 }
   enum size: { small: 1, medium: 0, large: 2, extra_large: 3 }
 

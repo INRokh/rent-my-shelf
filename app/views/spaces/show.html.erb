@@ -1,22 +1,63 @@
-<%= link_to "Edit", edit_space_path(@space) if current_user.id == @space.user_id %>
-<%= link_to 'Back', spaces_path %>
 
-<p>
-  <h3>Space</h3>
-</p>
-<div class="card w-75">
-  <div class="card-body">
-    <%= image_tag @space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if @space.image.attached? %>
-    <h5 class="card-title"><%= @space.title %></h5>
-    <h6 class="card-text"><%= @space.description %></h6>
-    <h6 class="card-text"><%= @space.address %></h6>
-    <h6 class="card-text"><%= @space.price %></h6>
+<% if !@space.is_active %>
+  <p class="alert alert-danger">Inactive</span>
+<% end %>
+
+<div class="row mb-5">
+  <% if @space.image.attached? %>
+    <div class="col-8">
+      <%= image_tag @space.image.variant(thumbnail: "1200x600^", gravity:"center", extent: "1200x600"), class: "img-fluid" %>
+    </div>
+  <% end %>
+  <div class="col">
+    <h1>
+      <%= @space.title %>
+
+      <% if current_user.id == @space.user_id %>
+        <%= link_to edit_space_path(@space), class: "btn btn-primary" do %>
+          <%= fa_icon "pencil"  %> Edit
+        <% end %>
+      <% end %>
+    </h1>
+    <p><%= @space.description %></p>
+    <p><%= fa_icon "usd" %> <%= @space.price %> per day</p>
+    <p><%= fa_icon "map-marker" %> <%= @space.address %>, <%= @space.post_code %></p>
+    <p><%= fa_icon "address-card-o" %> <%= @space.contact_info %></p>
+    <h5>
+      <span class="badge badge-info"><%= @space.size %></span>
+      <span class="badge badge-info"><%= @space.space_type %></span>
+      <% @space.products.each do |product| %>
+        <span class="badge badge-light"><%= product.name %></span>
+      <% end %>
+    </h5>
   </div>
-</div>
+</div> 
 
-<p>
-  <h3>Campaigns</h3>
-</p>
+<h2>Campaigns</h2>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Decription</th>
+      <th scope="col">Status</th>
+      <th scope="col">Start Date</th>
+      <th scope="col">End Date</th>
+      <th scope="col">Contact Info</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @space.campaigns.each do |campaign| %>
+      <tr>
+        <th><%= campaign.title %></th>
+        <td><%= campaign.description %></td>
+        <td><%= campaign.status %></td>
+        <td><%= campaign.start_date %></td>
+        <td><%= campaign.end_date %></td>
+        <td><%= campaign.contact_info %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <div>
   <% @space.campaigns.each do |campaign| %>

@@ -1,25 +1,35 @@
+<h1 class="mb-4">
+  My Spaces
+  <%= link_to new_space_path, class: "btn btn-primary" do %>
+    <%= fa_icon "plus" %> Add Space
+  <% end %>
+</h1>
 
-<div>
-  <h1>List of Spaces</h1>
-  <button type="button" class="btn btn-light"><%= link_to 'Create a new Space', new_space_path %></button>
-</div>
-
+<div class="row mb-4">
   <% @user_spaces.each do |space| %>
-    <div class="row">
-      <div class="card w-75">
-        <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached? %>
+    <div class="col-6">
+      <div class="card mb-4">
+        <%= image_tag space.image.variant(thumbnail: "800x400^", gravity:"center", extent: "800x400"), class: "card-img-top" if space.image.attached? %>
         <div class="card-body">
-          <h5 class="card-title">Title<%= space.title %></h5>
-          <p class="card-text">Description: <%= space.description %></p>
-          <p class="card-text">Address: <%= space.address %></p>
-          <p class="card-text">Status: <%= space.is_active %></p>
-          <p class="card-text">Price: $<%= space.price %> per day</p>
-        </div>
-        
-        <div class="card-body">
-          <button class="btn btn-link"><%= link_to 'Show', space %></button>
-          <button class="btn btn-link"><%= link_to 'Edit', edit_space_path(space) %></button>
-          <button class="btn btn-link"><%= link_to 'Delete', space, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+          <h4 class="card-title">
+            <%= space.title %>
+            <% if !space.is_active %>
+              <span class="badge badge-danger">Inactive</span>
+            <% else %>
+              <span class="badge badge-dark">$<%= space.price %> per day</span>
+            <% end %>
+            <span class="badge badge-info"><%= space.size %></span>
+            <span class="badge badge-info"><%= space.space_type %></span>
+          </h4>
+          <p class="card-text"><%= space.description %></p>
+          <p class="card-text"><%= space.address %>, <%= space.post_code %></p>
+          <p class="card-text"><%= space.contact_info %></p>
+
+          <%= link_to 'Show', space, class: "card-link" %>
+          <%= link_to 'Edit', edit_space_path(space), class: "card-link" %>
+          <% if space.campaigns.count == 0 %>
+            <%= link_to 'Delete', space, method: :delete, data: { confirm: 'Are you sure?' }, class: "card-link" %>
+          <% end %>
         </div>
       </div>
     </div>

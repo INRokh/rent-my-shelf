@@ -45,9 +45,9 @@ class SpacesController < ApplicationController
     respond_to do |format|
       if @space.campaigns.count == 0 
         @space.destroy
-        format.html { redirect_to spaces_url, notice: "Space was successfully destroyed." }
+        format.html { redirect_to spaces_url, notice: "Space was removed." }
       else
-        format.html { redirect_to @space, alert: "Space has campaigns. Can't destroy." }
+        format.html { redirect_to @space, alert: "Space has campaigns. Can't remove." }
       end
     end
   end
