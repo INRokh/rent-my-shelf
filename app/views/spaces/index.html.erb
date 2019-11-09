@@ -4,37 +4,25 @@
   <button type="button" class="btn btn-light"><%= link_to 'Create a new Space', new_space_path %></button>
 </div>
 
-<div>
   <% @user_spaces.each do |space| %>
-  <div class="card-col">
-    <div class="card w-75">
-      <div class="card-body">
+    <div class="row">
+      <div class="card w-75">
         <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached? %>
-        <h5 class="card-title"><%= space.title %></h5>
-        <p class="card-text"><%= space.description %></p>
-        <p class="card-text"><%= space.address %></p>
-        <p class="card-text"><%= space.is_active %></p>
-        <p class="card-text">$<%= space.price %>per day</p>
-      </div>
-      
-      <div class="card-body">
-        <button class="btn btn-link"><%= link_to 'Show', space %></button>
-        <button class="btn btn-link"><%= link_to 'Edit', edit_space_path(space) %></button>
-        <button class="btn btn-link"><%= link_to 'Delete', space, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+        <div class="card-body">
+          <h5 class="card-title">Title<%= space.title %></h5>
+          <p class="card-text">Description: <%= space.description %></p>
+          <p class="card-text">Address: <%= space.address %></p>
+          <p class="card-text">Status: <%= space.is_active %></p>
+          <p class="card-text">Price: $<%= space.price %> per day</p>
+        </div>
+        
+        <div class="card-body">
+          <button class="btn btn-link"><%= link_to 'Show', space %></button>
+          <button class="btn btn-link"><%= link_to 'Edit', edit_space_path(space) %></button>
+          <button class="btn btn-link"><%= link_to 'Delete', space, method: :delete, data: { confirm: 'Are you sure?' } %></button>
+        </div>
       </div>
     </div>
   <% end %>
 </div>
-
-
-
-    
-
-
-
-
-
-
-
-
 

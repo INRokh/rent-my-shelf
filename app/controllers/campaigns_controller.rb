@@ -1,7 +1,7 @@
 class CampaignsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user_campaign, only: [:edit, :update, :destroy, :show]
-
+  
   def index
     @user_campaigns = current_user.campaigns
   end
@@ -11,21 +11,18 @@ class CampaignsController < ApplicationController
 
   def new
     @campaign = Campaign.new
-    @products = Product.all
-    @sizes = Campaign.sizes.keys
+    set_campaign_properties
   end
 
   def edit
     if @campaign.status_new?
-      @sizes = Campaign.sizes.keys
-      @products = Product.all
+      set_campaign_properties
     else
       respond_to do |format|
-          format.html {
-              redirect_to @campaign,
-              alert: "Campaign can't be edited."
+        format.html {
+          redirect_to @campaign,
+          alert: "Campaign can't be edited."
         }
-        
       end
     end
   end
@@ -40,8 +37,7 @@ class CampaignsController < ApplicationController
           notice:"Campaign was successfully created."
         }
       else
-        @sizes = Campaign.sizes.keys
-        @products = Product.all
+        set_campaign_properties
         format.html { render :new }
       end
     end
@@ -103,5 +99,10 @@ class CampaignsController < ApplicationController
       if @campaign == nil
         redirect_to campaign_path
       end
+    end
+
+    def set_campaign_properties
+      @products = Product.all
+      @sizes = Campaign.sizes.keys
     end
 end

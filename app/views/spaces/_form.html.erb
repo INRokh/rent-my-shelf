@@ -1,9 +1,8 @@
 
-<%= form_with(model: space, local: true) do |form| %>
+<%= form_with(model: space, local: true) do |f| %>
   <% if space.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(space.errors.count, "error") %> prohibited this space from being saved:</h2>
-
       <ul>
         <% space.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -13,63 +12,91 @@
   <% end %>
 
   <div class="container">
-    <div class="text-center m-5">
-      <div class="form-group">
-        <%= form_with model: space, local: true do |f| %>
-          <p>
-            <%= f.label :title %><br>
-            <%= f.text_field :title, class: "form-control", id: "exampleFormControlInput1" %>
-          </p>
-          <p>
-           <%= f.label :is_active %><br>
-            <%= f.check_box :is_active %>
-          </p>
-          <p>
-            <%= f.label :description  %><br>
-            <%= f.text_area :description,class: "form-control", id: "exampleFormControlTextarea1"%>
-          </p>
-          <p>
-            <%= f.label :address %><br>
-            <%= f.text_area :address, class: "form-control", id: "exampleFormControlInput1" %>
-          </p>
-          <p>
-            <%= f.label :post_code %><br>
-            <%= f.text_area :post_code, class: "form-control", id: "exampleFormControlInput1" %>
-          </p>
-          <p> 
-            <%= f.label :size %><br> 
-            <% for option in sizes %>
-              <%= f.radio_button :size, option %>
-              <%= f.label "size_#{option}".to_sym, option %>
-            <% end %>
-          </p>
-          <p>
-            <%= f.label :contact_info %><br>
-            <%= f.text_area :contact_info, class: "form-control", id: "exampleFormControlInput1"  %>
-          </p>
-          <p>
-            <%= f.label :price%><br>
-            <%= f.number_field :price, class: "form-control", id: "exampleFormControlInput1"  %>
-          </p>
-          <p>
-            <%= f.label :space_type %><br> 
-            <% for option in spaces_types %>
-              <%= f.radio_button :space_type, option %>
-              <%= f.label "space_type_#{option}".to_sym, option %>
-            <% end %>
-          </p>
-          <p>
-           <%= form.collection_check_boxes :product_ids, products, :id, :name %>
-          </p>
-          <p>
-            <%= form.label :image %>
-            <%= form.file_field :image, accept: "image/png,image/gif,image/jpeg,image/jpg" %>
-          </p>
-          <p>
-            <%= f.submit %>
-          </p>
+    <div class="form-group col-5">
+
+      <div class="col">
+        <%= f.label :title %><br>
+        <%= f.text_field :title, class: "form-control", placeholder: "Title" %>
+      </div>
+
+      <div class="col">
+        <%= f.label :is_active %><br>
+        <%= f.check_box :is_active %>
+      </div>
+
+      <div class="col">
+        <%= f.label :description  %><br>
+        <%= f.text_area :description,class: "form-control", placeholder: "Description"%>
+      </div>
+
+      <div class="col">
+        <%= f.label :address %><br>
+        <%= f.text_area :address, class: "form-control", placeholder: "Address" %>
+      </div>
+
+      <div class="col">
+        <%= f.label :post_code %><br>
+        <%= f.text_area :post_code, class: "form-control", placeholder: "Post code" %>
+      </div>
+
+
+<select name="city_id" id="city_id">
+  <option value="1">Lisbon</option>
+  <option value="2">Madrid</option>
+  <option value="3">Berlin</option>
+</select>
+
+      <div class="col"> 
+        <%= f.label :size %><br> 
+        <% for option in sizes %>
+        <select name="city_id" id="city_id">
+          <option><%= f.label "size_#{option}".to_sym, option %></option>
+        </select>
         <% end %>
       </div>
+
+
+
+      <div class="col"> 
+        <%= f.label :size %><br> 
+        <% for option in sizes %>
+          <%= f.radio_button :size, option %>
+          <%= f.label "size_#{option}".to_sym, option %>
+        <% end %>
+      </div>
+
+      <div class="col">
+        <%= f.label :contact_info %><br>
+        <%= f.text_area :contact_info, class: "form-control", placeholder: "Contact info"  %>
+      </div>
+
+      <div class="col">
+        <%= f.label :price%><br>
+        <%= f.number_field :price, class: "form-control", placeholder: "Price"  %>
+      </div>
+
+      <div class="col">
+        <%= f.label :space_type %><br> 
+        <% for option in spaces_types %>
+          <%= f.radio_button :space_type, option %>
+          <%= f.label "space_type_#{option}".to_sym, option %>
+        <% end %>
+      </div>
+
+      <div class="col">
+        <%= f.collection_check_boxes :product_ids, products, :id, :name %>
+      </div>
+
+      <div class="col">
+        <%= f.label :image %>
+        <%= f.file_field :image, accept: "image/png,image/gif,image/jpeg,image/jpg" %>
+      </div>
+
+      <div class="col">
+        <%= f.submit %>
+      </div>
+      
     </div>
+  </div>
   </div>
 <% end %>

@@ -3,22 +3,26 @@ class SpaceSelectorController < ApplicationController
   before_action :set_user_campaign
 
   def index
-    @spaces = Space.suitable_for_campaign(
-      @campaign.size, @campaign.product_ids)
     if params[:post_code] && !params[:post_code].empty?
-      @spaces = @spaces.where(post_code: params[:post_code])
       @post_code = params[:post_code]
-    end
-
-    @linked_spaces = Set.new
-    @campaign.spaces.each do |space|
-      @linked_spaces << space.id
+      @spaces = Space.suitable_for_campaign_in_area(
+        @campaign.size, @campaign.product_ids, 
+        @campaign.start_date, @campaign.end_date,
+        @post_code
+      )
+    else 
+      @spaces = Space.suitable_for_campaign(
+        @campaign.size, @campaign.product_ids, 
+        @campaign.start_date, @campaign.end_date
+      )
     end
   end
 
   def link
     @spaces = Space.suitable_for_campaign(
-      @campaign.size, @campaign.product_ids)
+      @campaign.size, @campaign.product_ids, 
+      @campaign.start_date, @campaign.end_date
+    )
     respond_to do |format|
       space_id = get_space_id.to_i
       space = @spaces.find { |s| s.id == space_id }

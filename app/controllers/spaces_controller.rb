@@ -43,7 +43,7 @@ class SpacesController < ApplicationController
 
   def destroy
     respond_to do |format|
-      if @space.campaigns.count == 0
+      if @space.campaigns.count == 0 
         @space.destroy
         format.html { redirect_to spaces_url, notice: "Space was successfully destroyed." }
       else
