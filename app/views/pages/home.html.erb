@@ -1,1 +1,39 @@
-<h1>Home page</h1>
+<div class="jumbotron heading text-left text-white shelf-bg">
+  <h1 class="display-3">Rent my Shelf</h1>
+  <h3> Student Project Demo </h3>
+</div>
+<div class="row mb-4">
+  <div class="col-8">
+    <p class="lead">
+      Rent my Shelf is a place where online and offline busnesses meet to reinvent advertising.
+    </p>
+  </div>
+  <div class="col">
+    <p class="alert alert-warning"> Disclaimer: this is a demo Ruby on Rails application.
+      <strong>Do not input personal information.</strong>
+      All charecters and events in this app are entirely fictional.
+
+    </p>
+  </div>
+</div>
+<div class="row mb-5">
+  <div class="col-lg-6 text-center">
+    <h1><%= fa_icon "line-chart", class: "fa-3x text-dark" %></h1>
+    <h5 class="card-title">Advertisers</h5>
+    <p class="card-text">
+      Launch a promo campaign in dozens of locations in a few clicks with 
+      flexible lightweight showrooms.
+    </p>
+    <%= link_to 'Start a Campaign', new_campaign_path, class: "btn btn-primary" %>
+  </div>
+  <div class="col-lg-6 text-center">
+    <h1><%= fa_icon "map-marker", class: "fa-3x text-dark" %></h1>
+    <h5 class="card-title">Space Owners</h5>
+    <p class="card-text">
+      Earn extra money hosting promo campaigns. Start with a single shelf – the cosier, the better!
+    </p>
+    <%= link_to 'List your Space', new_space_path, class: "btn btn-primary" %>
+  </div>
+</div>
+
+

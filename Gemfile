@@ -63,9 +63,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "devise", "~> 4.7"
 
-gem "bootstrap", "~> 4.3"
+gem "bootstrap", "~> 4.3.1"
 
-gem "jquery-rails", "~> 4.3"
+gem "jquery-rails"
 
 gem "aws-sdk-s3", "~> 1.53"
 
@@ -74,3 +74,5 @@ gem "image_processing", "~> 1.9"
 gem "simple_calendar", "~> 2.3"
 
 gem "stripe", "~> 5.7"
+
+gem "font-awesome-rails", "~> 4.7"
