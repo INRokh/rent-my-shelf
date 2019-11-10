@@ -51,6 +51,7 @@ class CampaignsController < ApplicationController
           alert: "Campaign can't be modified."
         }
       elsif @campaign.update(campaign_params)
+        @campaign.spaces.delete_all
         format.html {
           redirect_to @campaign,
           notice: "Campaign was successfully updated."

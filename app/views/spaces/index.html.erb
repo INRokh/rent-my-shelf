@@ -22,8 +22,13 @@
             <span class="badge badge-info"><%= space.space_type %></span>
           </h4>
           <p class="card-text"><%= space.description %></p>
-          <p class="card-text"><%= space.address %>, <%= space.post_code %></p>
-          <p class="card-text"><%= space.contact_info %></p>
+          <p class="card-text">
+            <%= fa_icon "map-marker" %>
+            <%= space.address %>, <%= space.post_code %></p>
+          <p class="card-text">
+            <%= fa_icon "address-card-o" %>
+            <%= space.contact_info %>
+          </p>
 
           <%= link_to 'Show', space, class: "card-link" %>
           <%= link_to 'Edit', edit_space_path(space), class: "card-link" %>
@@ -35,4 +40,3 @@
     </div>
   <% end %>
 </div>
-

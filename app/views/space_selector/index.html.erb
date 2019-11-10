@@ -1,52 +1,115 @@
-<h1>Space selector</h1>
-
-<div class="card w-75">
-  <div class="card-body">
-    <h5 class="card-title"><%= @campaign.title %></h5>
-    <h5 class="card-title"><%= @campaign.status %></h5>
-    <h6 class="card-description"><%= @campaign.start_date %></h6>
-    <h6 class="card-description"><%= @campaign.end_date %></h6>
+<h1>
+  <%= @campaign.title %>
+  <%= link_to @campaign, class: "btn btn-secondary" do %>
+    <%= fa_icon "long-arrow-left" %> Back to campaign
+  <% end %>
+</h1>
+<div class="row mb-5">
+  <div class="col-3">
+    <!-- Campaign info -->
+    <p class="card-text">
+      <%= fa_icon "calendar" %>
+      <%= @campaign.start_date.strftime "%e %b %Y" %> – <%= @campaign.end_date.strftime "%e %b %Y" %>
+    </p>
+  </div>
+  <div class="col-3">
+    <p><%= fa_icon "address-card-o" %> <%= @campaign.contact_info %></p>
+  </div>
+  <div class="col-3">
+    <!-- Campaign tags -->
+    <h5>
+      <span class="badge badge-info"><%= @campaign.size %></span>
+      <% @campaign.products.each do |product| %>
+        <span class="badge badge-light"><%= product.name %></span>
+      <% end %>
+    </h5>
   </div>
 </div>
 
-<%= link_to "Back to campaign", @campaign %>
 
-<h1>Campaign Spaces</h1>
+<% if @campaign.spaces.count > 0 %>
+  <h3>Linked Spaces</h3>
+  <div class="row mb-4">
+    <% @campaign.spaces.each do |space| %>
+      <div class="col-4">
+        <div class="card mb-3">
+          <%= image_tag space.image.variant(thumbnail: "512x150^", gravity:"center", extent: "512x150"), class: "card-img-top" if space.image.attached? %>
+          <div class="card-body">
+            <h4 class="card-title">
+              <%= space.title %>
+              <% if !space.is_active %>
+                <span class="badge badge-danger">Inactive</span>
+              <% else %>
+                <span class="badge badge-dark">$<%= space.price %> per day</span>
+              <% end %>
+              <span class="badge badge-info"><%= space.space_type %></span>
+            </h4>
+            <p class="card-text">
+              <%= fa_icon "map-marker" %>
+              <%= space.address %>, <%= space.post_code %>
+            </p>
+            <p class="card-text">
+              <%= fa_icon "address-card-o" %>
+              <%= space.contact_info %>
+            </p>
+            <%= button_to space_selector_path,
+                          method: :delete,
+                          params: {space_id: space.id, post_code: params[:post_code]},
+                          class: "btn btn-danger" do %>
+              <%= fa_icon "chain-broken" %> Remove
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
 
-<% @campaign.spaces.each do |space| %>
-  <div class="card w-75">
-    <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached?  %>
-    <div class="card-body">
-        <h5 class="card-title"><%= space.title %></h5>
-        <h6 class="card-dtest"><%= space.description %></h6>
-        <h6 class="card-text"><%= space.address %></h6>
-        <h6 class="card-text"><%= space.price %></h6>
-        <%= button_to 'Delete', space_selector_path, method: :delete, params: {space_id: space.id, post_code: params[:post_code]} %>
+<h2> Search Spaces </h2>
+<%= form_with(url: space_selector_path, method: :get, local: true) do %>
+  <div class="input-group mb-3">
+    <%= text_field_tag :post_code, @post_code, placeholder: "Post Code", class: "form-control" %>
+    <div class="input-group-prepend">
+      <%= submit_tag "Search", class: "btn btn-outline-secondary" %>
     </div>
   </div>
 <% end %>
 
-<h1> Search Spaces </h1>
-
-<div>
-  <%= form_with(url: space_selector_path, method: :get, local: true) do %>
-    <%= label_tag(:post_code, "Post code:") %>
-    <%= text_field_tag(:post_code, @post_code) %>
-    <%= submit_tag("Search") %>
-  <% end %>
-</div>
-
-<% @spaces.each do |space| %>
-<div class="card w-75">
-  <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached?  %>
-  <div class="card-body">
-      <h5 class="card-title"><%= space.title %></h5>
-      <h6 class="card-dtest"><%= space.description %></h6>
-      <h6 class="card-text"><%= space.address %></h6>
-      <h6 class="card-text"><%= space.price %></h6>
-      <%= button_to 'Add', space_selector_path, method: :post, params: {space_id: space.id, post_code: params[:post_code]} %> 
+<% if @spaces.count == 0 %>
+  <p>No spaces meeting the requirements.</p>
+<% else %>
+  <div class="row mb-4">
+    <% @spaces.each do |space| %>
+      <div class="col-4">
+        <div class="card mb-3">
+          <%= image_tag space.image.variant(thumbnail: "512x150^", gravity:"center", extent: "512x150"), class: "card-img-top" if space.image.attached? %>
+          <div class="card-body">
+            <h4 class="card-title">
+              <%= space.title %>
+              <% if !space.is_active %>
+                <span class="badge badge-danger">Inactive</span>
+              <% else %>
+                <span class="badge badge-dark">$<%= space.price %> per day</span>
+              <% end %>
+              <span class="badge badge-info"><%= space.space_type %></span>
+            </h4>
+            <p class="card-text">
+              <%= fa_icon "map-marker" %>
+              <%= space.address %>, <%= space.post_code %>
+            </p>
+            <p class="card-text">
+              <%= fa_icon "address-card-o" %>
+              <%= space.contact_info %>
+            </p>
+            <%= button_to space_selector_path,
+                          method: :post,
+                          params: {space_id: space.id, post_code: params[:post_code]},
+                          class: "btn btn-primary" do %>
+            <%= fa_icon "chain" %> Add
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-</div>
 <% end %>
-
- 

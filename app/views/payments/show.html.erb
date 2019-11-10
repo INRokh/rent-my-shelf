@@ -1,11 +1,83 @@
+<h1>Purchase Confirmation</h1>
+<p class="alert alert-warning">
+  <%= fa_icon "exclamation-circle" %>
+   Check the campaign details and selected spaces. No edits are possible after purchase.
+</p>
+<h3>Campaign Details</h3>
+<dl class="row">
+  <dt class="col-sm-2">Reference ID</dt>
+  <dd class="col-sm-10"><%= @campaign.id %></dd>
 
-<div>
-  <%= link_to "Edit campaign", edit_campaign_path(@campaign) if current_user.id == @campaign.user_id %> |
-  <%= link_to "Back to campaigns", campaigns_path %> |
-</div>
+  <dt class="col-sm-2">Title</dt>
+  <dd class="col-sm-10"><%= @campaign.title %></dd>
 
-<div>
-  <button data-stripe="payment">buy<%= @campaign.total_price %></button>
+  <dt class="col-sm-2">Description</dt>
+  <dd class="col-sm-10"><%= @campaign.description %></dd>
+
+  <dt class="col-sm-2">Contact info</dt>
+  <dd class="col-sm-10"><%= @campaign.contact_info %></dd>
+
+  <dt class="col-sm-2">Start date</dt>
+  <dd class="col-sm-10"><%= @campaign.start_date %></dd>
+
+  <dt class="col-sm-2 text-truncate">End date</dt>
+  <dd class="col-sm-10"><%= @campaign.end_date %></dd>
+
+  <dt class="col-sm-2 text-truncate">Size</dt>
+  <dd class="col-sm-10"><%= @campaign.size %></dd>
+
+  <dt class="col-sm-2 text-truncate">Products</dt>
+  <dd class="col-sm-10">
+    <% for i in 0...@campaign.products.length - 1 %>
+      <%= @campaign.products[i].name %>,
+    <% end %>
+    <%= @campaign.products[-1].name %>
+  </dd>
+</dl>
+
+<h3>Selected Spaces</h3>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Title</th>
+      <th scope="col">Post Code</th>
+      <th scope="col">Cost</th>
+      <th scope="col">Type</th>
+      <th scope="col">Address</th>
+      <th scope="col">Contact Info</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @campaign.spaces.each do |space| %>
+      <tr>
+        <th><%= space.id %></th>
+        <td><%= space.title %></td>
+        <td><%= space.post_code %></td>
+        <td>$<%= space.price * (@campaign.end_date - @campaign.start_date).to_i %></td>
+        <td><%= space.space_type %></td>
+        <td><%= space.address %></td>
+        <td><%= space.contact_info %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="row">
+  <div class="col-3 text-right">
+    <h3>
+      Total price:
+      $<%= @campaign.total_price %>
+    </h3>
+  </div>
+  <div class="col-6">
+    <button data-stripe="payment" class="btn btn-primary">
+      <%= fa_icon "check" %> Confirm
+    </button>
+    <%= link_to payment_cancel_path(@campaign), class: "btn btn-danger" do%>
+      <%= fa_icon "ban" %> Cancel
+    <% end %>
+  </div>
 </div>
 
 <script src="https://js.stripe.com/v3/"></script>
@@ -20,33 +92,3 @@
       });
     });
 </script>
-
-
-<div class="card w-75">
-  <div class="card-body">
-    <h5 class="card-title"><%= @campaign.title %></h5>
-    <h5 class="card-title"><%= @campaign.status %></h5>
-    <h6 class="card-description"><%= @campaign.start_date %></h6>
-    <h6 class="card-description"><%= @campaign.end_date %></h6>
-  </div>
-</div>
-
-<p>
-  <h2>Spaces</h2>
-  <h3><%= @total %></h3>
-</p>
-
-<div>
-  <% @campaign.spaces.each do |space| %>
-    <div class="card w-75">
-        <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached?  %>
-      <div class="card-body">
-        <h5 class="card-title"><%= space.title %></h5>
-        <h6 class="card-dtest"><%= space.description %></h6>
-        <h6 class="card-text"><%= space.address %></h6>
-        <h6 class="card-text"><%= space.price %></h6>
-      </div>
-    </div>
-  <% end %>
-</div>
-

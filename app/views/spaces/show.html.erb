@@ -5,7 +5,7 @@
 
 <div class="row mb-5">
   <% if @space.image.attached? %>
-    <div class="col-8">
+    <div class="col-7">
       <%= image_tag @space.image.variant(thumbnail: "1200x600^", gravity:"center", extent: "1200x600"), class: "img-fluid" %>
     </div>
   <% end %>
@@ -16,6 +16,14 @@
       <% if current_user.id == @space.user_id %>
         <%= link_to edit_space_path(@space), class: "btn btn-primary" do %>
           <%= fa_icon "pencil"  %> Edit
+        <% end %>
+        <% if @space.campaigns.count == 0 %>
+          <%= link_to @space,
+                      method: :delete,
+                      data: { confirm: 'Are you sure?' },
+                      class: "btn btn-danger" do %>
+            <%= fa_icon "trash-o" %> Delete
+          <% end %>
         <% end %>
       <% end %>
     </h1>

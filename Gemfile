@@ -76,3 +76,7 @@ gem "simple_calendar", "~> 2.3"
 gem "stripe", "~> 5.7"
 
 gem "font-awesome-rails", "~> 4.7"
+
+gem "faker", "~> 2.7"
+
+gem "down", "~> 5.0"
