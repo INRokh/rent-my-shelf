@@ -1,34 +1,112 @@
 
-<div>
-    <%= link_to "Edit campaign", edit_campaign_path(@campaign) if current_user.id == @campaign.user_id %> |
-    <%= link_to "Back to campaigns", campaigns_path %> |
-    <%= link_to "Checkout", payment_path(@campaign) %> |
-    
+<div class="row mb-2">
+  <div class="col-2 text-center">
+    <h1><%= fa_icon "line-chart", class: "fa-2x text-dark" %></h1>
+  </div>
+  <div class="col-8">
+    <h1>
+      <%= @campaign.title %>
+      <!-- Campaign buttons -->
+      <% if @campaign.status_new? %>
+        <%= link_to edit_campaign_path(@campaign), class: "btn btn-primary" do %>
+          <%= fa_icon "pencil"  %> Edit
+        <% end %>
+        <%= link_to payment_path(@campaign), class: "btn btn-primary" do %> 
+            <%= fa_icon "credit-card"  %> Checkout
+        <% end %>
+        <%= link_to @campaign, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" do %>
+          <%= fa_icon "trash-o" %> Delete
+        <% end %>
+      <% elsif @campaign.status_pending_payment? %>
+        <%= link_to payment_path(@campaign), class: "btn btn-primary" do %> 
+            <%= fa_icon "check"  %> Complete Payment
+        <% end %>
+        <%= link_to payment_cancel_path(@campaign), class: "btn btn-danger" do %>
+          <%= fa_icon "ban" %> Cancel Checkout
+        <% end %>
+      <% end %>
+    </h1>
+    <p><%= @campaign.description %></p>
+  </div>
 </div>
 
-<div class="card w-75">
-    <div class="card-body">
-        <h5 class="card-title"><%= @campaign.title %></h5>
-        <h5 class="card-title"><%= @campaign.status %></h5>
-        <h6 class="card-description"><%= @campaign.start_date %></h6>
-        <h6 class="card-description"><%= @campaign.end_date %></h6>
-    </div>
+<div class="row mb-5">
+  <div class="col-3">
+    <!-- Campaign status -->
+    <p>
+      Status: 
+      <% if @campaign.status_new? %>
+        <span class="text-primary"><%= @campaign.status %></span>
+      <% elsif @campaign.status_pending_payment? %>
+        <span class="text-warning"><%= @campaign.status %></span>
+      <% elsif @campaign.status_processing_payment? %>
+        <span class="text-info"><%= @campaign.status %></span>
+      <% elsif @campaign.status_ready? %>
+        <span class="text-success"><%= @campaign.status %></span>
+      <% else %>
+        <span class="text-light"><%= @campaign.status %></span>
+      <% end %>
+    </p>
+  </div>
+  <div class="col-3">
+    <!-- Campaign info -->
+    <p class="card-text">
+      <%= fa_icon "calendar" %>
+      <%= @campaign.start_date.strftime "%e %b %Y" %> – <%= @campaign.end_date.strftime "%e %b %Y" %>
+    </p>
+  </div>
+  <div class="col-3">
+    <p><%= fa_icon "address-card-o" %> <%= @campaign.contact_info %></p>
+  </div>
+  <div class="col-3">
+    <!-- Campaign tags -->
+    <h5>
+      <span class="badge badge-info"><%= @campaign.size %></span>
+      <% @campaign.products.each do |product| %>
+        <span class="badge badge-light"><%= product.name %></span>
+      <% end %>
+    </h5>
+  </div>
 </div>
-<p>
-    <h2>Spaces</h2>
-    <h3><%= @total %></h3>
-</p>
-<div>
+
+<div class="row">
+  <div class="col-8">
+    <h2>
+      Spaces
+      <%= link_to space_selector_path, class: "btn btn-primary" do %>
+        <%= fa_icon "link" %> Link Spaces
+      <% end %>
+    </h2>
+  </div>
+  <div class="col-4 text-right">
+    <h2>
+      Total price:
+      $<%= @campaign.total_price %>
+    </h2>
+  </div>
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Post Code</th>
+      <th scope="col">Cost</th>
+      <th scope="col">Type</th>
+      <th scope="col">Address</th>
+      <th scope="col">Contact Info</th>
+    </tr>
+  </thead>
+  <tbody>
     <% @campaign.spaces.each do |space| %>
-        <div class="card w-75">
-            <%= image_tag space.image.variant(thumbnail: "800x300^", gravity:"center", extent: "800x300") if space.image.attached?  %>
-            <div class="card-body">
-                <h5 class="card-title"><%= space.title %></h5>
-                <h6 class="card-dtest"><%= space.description %></h6>
-                <h6 class="card-text"><%= space.address %></h6>
-                <h6 class="card-text"><%= space.price %></h6>
-            </div>
-        </div>
+      <tr>
+        <th><%= space.title %></th>
+        <td><%= space.post_code %></td>
+        <td>$<%= space.price * (@campaign.end_date - @campaign.start_date).to_i %></td>
+        <td><%= space.space_type %></td>
+        <td><%= space.address %></td>
+        <td><%= space.contact_info %></td>
+      </tr>
     <% end %>
-</div>
-
+  </tbody>
+</table>

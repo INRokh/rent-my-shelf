@@ -1,21 +1,52 @@
-<div>
-  <h1>List of current Campaigns</h1>
-  <button type="button" class="btn btn-light"><%= link_to 'Create a new Campaign', new_campaign_path %></button>
-</div>
-<div>
-    <% @user_campaigns.each do |campaign| %>
-      <div class="card w-75">
+<h1 class="mb-4">
+  My Campaigns
+  <%= link_to new_campaign_path, class: "btn btn-primary" do %>
+    <%= fa_icon "plus" %> Add Campaign
+  <% end %>
+</h1>
+<div class="row mb-4">
+  <% @user_campaigns.each do |campaign| %>
+    <div class="col-6">
+      <div class="card mb-4">
         <div class="card-body">
-          <h5 class="card-title"><%= campaign.title %></h5>
-          <h5 class="card-title"><%= campaign.status %></h5>
-          <h6 class="card-description"><%= campaign.start_date %></h6>
-          <h6 class="card-description"><%= campaign.end_date %></h6>
+          <!-- Campaign title -->
+          <h4 class="card-title">
+            <%= campaign.title %>
+            <% if campaign.status_new? %>
+              <span class="badge badge-primary"><%= campaign.status %></span>
+            <% elsif campaign.status_pending_payment? %>
+              <span class="badge badge-warning"><%= campaign.status %></span>
+            <% elsif campaign.status_processing_payment? %>
+              <span class="badge badge-info"><%= campaign.status %></span>
+            <% elsif campaign.status_ready? %>
+              <span class="badge badge-success"><%= campaign.status %></span>
+            <% else %>
+              <span class="badge badge-light"><%= campaign.status %></span>
+            <% end %>
+          </h4>
+          <!-- Campaign info -->
+          <p class="card-text">
+            <%= fa_icon "calendar" %>
+            <%= campaign.start_date.strftime "%e %b %Y" %> – <%= campaign.end_date.strftime "%e %b %Y" %>
+          </p>
+          <p>
+            <%= fa_icon "usd" %>
+            <%= campaign.total_price %> - total price
+          </p>
+          <p class="card-text">
+            <%= fa_icon "address-card-o" %>
+            <%= campaign.contact_info %>
+          </p>
+          <!-- Campaign buttons -->
+          <%= link_to 'Show', campaign, class: "card-link" %>
+          <% if campaign.status_new? %>
+            <%= link_to 'Edit', edit_campaign_path(campaign), class: "card-link" %>
+            <%= link_to 'Delete', campaign, method: :delete, data: { confirm: 'Are you sure?' }, class: "card-link" %>
+          <% elsif campaign.status_pending_payment? %>
+            <%= link_to 'Cancel', payment_cancel_path(campaign), class: "card-link" %>
+          <% end %>
         </div>
-        <div class="card-body">
-          <button class="btn btn-link"><%= link_to 'Show', campaign %></button>
-          <button class="btn btn-link"><%= link_to 'Edit', edit_campaign_path(campaign) %></button>
-          <button class="btn btn-link"><%= link_to 'Delete', campaign, method: :delete, data: { confirm: 'Are you sure?' } %></button>
-        </div>
-      </div>
-    <% end %>
+      </div>  
+    </div>
+  <% end %>
 </div>

@@ -27,6 +27,15 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
+  config.sass.cache = false 
+
+  config.public_file_server.headers = {
+    'Cache-Control' => "no-cache"
+  }
+
+  config.assets.cache_store = :null_store
+  # config.assets.digest = true
+
   # Store uploaded files on the local file system (see config/storage.yml for options)
   # config.active_storage.service = :local
 

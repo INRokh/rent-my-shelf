@@ -1,7 +1,6 @@
 <h1>Editing Campaign</h1>
-
+<p class="alert alert-warning">
+  <%= fa_icon "exclamation-circle" %>
+  This operation will remove any associated spaces.
+</p>
 <%= render 'form', campaign: @campaign, sizes: @sizes, products: @products, spaces: @spaces %>
-
-<%= link_to 'Show', @campaign %> |
-<%= link_to 'Back', campaigns_path %> |
-<%= link_to "Manage spaces", space_selector_path %>

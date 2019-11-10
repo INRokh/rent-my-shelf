@@ -1,4 +1,3 @@
-
 <%= form_with(model: space, local: true) do |f| %>
   <% if space.errors.any? %>
     <div id="error_explanation" class="alert alert-danger">
@@ -19,7 +18,7 @@
       </div>
       <div class="form-group">
         <%= f.label :description  %>
-        <%= f.text_area :description,class: "form-control", placeholder: "Description"%>
+        <%= f.text_area :description,class: "form-control", placeholder: "Description" %>
       </div>
       <div class="form-group">
         <%= f.label :price_per_day%>
@@ -42,7 +41,7 @@
       </div>
       <div class="form-group">
         <%= f.label :contact_info %>
-        <%= f.text_area :contact_info, class: "form-control", placeholder: "Contact info"  %>
+        <%= f.text_area :contact_info, class: "form-control", placeholder: "Contact info" %>
       </div>
     </div>
   </div>

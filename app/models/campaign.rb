@@ -21,9 +21,7 @@ class Campaign < ApplicationRecord
   }, _prefix: :status
 
   def correct_date_interval?
-    if Date.current.strftime("%Y-%m-%d") > start_date.to_s
-      errors.add(:start_date, "must be greater than current day.")
-    end
+    return unless start_date? && end_date?
     if start_date >= end_date
       errors.add(:start_date, "must be before the End date.")
       errors.add(:end_date, "must be after the Start date.")

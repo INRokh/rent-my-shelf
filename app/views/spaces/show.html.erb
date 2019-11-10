@@ -58,18 +58,3 @@
     <% end %>
   </tbody>
 </table>
-
-<div>
-  <% @space.campaigns.each do |campaign| %>
-    <% if campaign.status_ready? %>
-      <div class="card w-75">
-        <div class="card-body">
-          <h5 class="card-title"><%= campaign.title %></h5>
-          <h6 class="card-text"><%= campaign.description %></h6>
-          <h6 class="card-text"><%= campaign.status %></h6>
-          <h6 class="card-text"><%= campaign.start_date %></h6>
-        </div>
-      </div>
-    <% end %>
-  <% end %>
-</div>
