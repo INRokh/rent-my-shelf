@@ -1,7 +1,9 @@
 # Rent my shelf
 
 [Demo (do not input sensitive data)](https://rent-my-shelf.herokuapp.com)
+
 [Code](https://github.com/INRokh/rent-my-shelf)
+
 [Trello](https://trello.com/b/CQRK1IMa/rentmyshelf)
 
 ## Goal
@@ -137,6 +139,21 @@ Business owners looking for either advertise their businesses or to host such ad
 1. Advertiser uses post code search when selecting spaces.
 1. Host starts a promo campaign acting as an advertiser.
 1. Advertiser lists their spaces acting as a host.
+
+## Wireframes ##
+
+Wireframes include not implemented elements.
+
+![Wireframe](readme_resources/wf-home.png)
+
+![Wireframe](readme_resources/wf-login.png)
+
+![Wireframe](readme_resources/wf-space-crud.png)
+
+![Wireframe](readme_resources/wf-space-options.png)
+
+![Wireframe](readme_resources/wf-campaign.png)
+
 
 ## High level design
 
