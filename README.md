@@ -154,42 +154,62 @@ Wireframes include not implemented elements.
 
 ![Wireframe](readme_resources/wf-campaign.png)
 
+## ERD 
+
+![ERD](readme_resources/ERD.png)
 
 ## High level design
 
-High level design covers basic features of the service. The application serves the traffic using PostgreSQL as a DB and AWS S3 as a storage for media objects (images).
+The application serves the traffic using PostgreSQL as a DB and AWS S3 as a storage for media objects (images). The data is defined by four models: user, space, campaign and order. User model is used by Devise to implement authentication and user management. Space model is used with space controller and corresponding views. Same for Campaign model. There is another controller that links spaces and campaigns called Space Selector. And, finally, Payments controller that interacts with Stripe payments service and logs orders to the Order model.
+
+## Third party services ##
+
+- Stripe to perform payments
+- AWS S3 to store data
+- Font Awesome to load icons
+- Heroku to host the app
 
 ## Data model
 
-Campaign represent promotion campaign defined by the start date and duration. The campaign includes one or more spaces. Products promoted by this campaign will be displayed in these spaces. Campaign maintains basics per space stats. Campagnie can be in one of these states: 
-* New
-* In progress
-* Finished
+__Campaign__ represent promotion campaign defined by the start date and duration. The campaign includes one or more spaces. Products promoted by this campaign will be displayed in these spaces. Campaign maintains basics per space stats. Campagnie can be in one of these statuses:
 
-__Space(shelf)__ represent a physical space where products can be displayed. The space accommodates campaigns. Space can accommodate only one campaign at a time. Space includes detailed information and photos. 
+1. New - campaing is being created.
+1. Pending Payment - campaign is finalized and needs to be paid.
+1. Processing Payment - payment has been made but hasn't been confirmed.
+1. Ready - payment is confirmed.
+1. Finished - time of the campaign is passed and campaign is old.
 
-__User__ combines both space owners and users looking for spaces. In other words a user of the system can own spaces and use other spaces for product promotion.  
+Campaign belongs to a user.
+
+Campaign is related to many spaces.
+
+Campaign is related to an order when it is paid.
+
+__Space(shelf)__ represent a physical space where products can be displayed. The space accommodates campaigns. Space can accommodate only one campaign at a time. Space includes detailed information and photos. Space can be active and visible in searches or inactive.
+
+Space belongs to a user.
+
+Space is related to many non-overlapping campaigns.
+
+Space is related to many orders.
+
+__User__ combines both space owners and users looking for spaces. In other words, a user of the system can own spaces and use other spaces for product promotion.
+
+User owns spaces and campaigns.
  
-__Campaign product category__ represent different types of products, for example clothes, food, accessories etc. Product types are used for matching spaces and campaigns. 
+__Campaign product category__ represent different types of products, for example clothes, food, accessories etc. Product types are used for matching spaces and campaigns.
 
-__Space category__ defines a type of the space, for example shops, cafes, bars etc.    
+Space is considered suitable for a campaign if it supports all product types requested by a campaign.
 
-## ERD 
+__Space category__ defines a type of the space, for example shop, cafe, bars etc.
 
-![](readme_resources/ERD.png)
+__Order__ logs payment info (no credit card info is logged). This can be used for future reference.
 
-## UI mockups
+## Project Management ##
 
+Tasks are split into small user stories that can be completed in a few hours. If a task appears to be
+bigger, it is split and re-prioritized. There are four boards:
 
-## Ruby gems
-
-gem "devise", "~> 4.7"
-
-gem "bootstrap", "~> 4.3"
-
-gem "jquery-rails", "~> 4.3"
-
-gem "aws-sdk-s3", "~> 1.53"
-
-gem "mini_magick", "~> 4.9"
-
+1. Features - big features that need triage
+2. ToDo - small user stories ready for implementation
+3. Doing and Done - user stories being implemented and completed.
