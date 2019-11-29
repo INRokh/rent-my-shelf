@@ -37,6 +37,11 @@ class SpaceSelectorController < ApplicationController
           redirect_to space_selector_url(post_code: params[:post_code]),
           alert: "Space is already linked."
         }
+      elsif @campaign.status_new?
+        format.html {
+          redirect_to space_selector_url(post_code: params[:post_code]),
+          alert: "Space must be in status New."
+        }
       else
         @campaign.spaces << space
         format.html {
@@ -55,6 +60,11 @@ class SpaceSelectorController < ApplicationController
         format.html {
           redirect_to space_selector_url(post_code: params[:post_code]),
           alert: "Space is not found."
+        }
+      elsif @campaign.status_new?
+        format.html {
+          redirect_to space_selector_url(post_code: params[:post_code]),
+          alert: "Space must be in status New."
         }
       else
         @campaign.spaces.delete(space)

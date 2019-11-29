@@ -14,13 +14,13 @@ The service that allows to run promotion campaigns in lightweight showrooms offe
 
 Many businesses such as shops and cafes require physical space. However, they rarely use space completely. Other businesses may be done online and don’t require physical space per say, but can benefit from offline presence. For example, an online store may use local coffee shops to display their goods. Designers may promote their new collection in clothing shops.
 
-The service allows online businesses to extend they promotion channels with clusters of lightweight offline showrooms. A promotion campaign may include dozens of such spaces covering target location and types of hosts. The key advantage is that starting a campaign is very easy and thus inexpensive.
+The service allows online businesses to extend their promotion channels with clusters of lightweight offline showrooms. A promotion campaign may include dozens of such spaces covering target location and types of hosts. The key advantage is that starting a campaign is very easy and thus inexpensive.
 
 Space owners, on the other hand, can get extra money without any effect on their core business.
 
 ## Major user scenarios 
 
-The main user of the system is the party that wants to rent a space (shelf) for promotion referred as advertiser. The spaces are provided by another party referred as space owners or hosts. The main entity is a campaign. Advertisers run and pay for campaigns. Space owners host the camapigns and receive payments.
+The main user of the system is the party that wants to rent a space (shelf) for promotion referred as an advertiser. The spaces are provided by another party referred as space owners or hosts. The main entity is a campaign. Advertisers run and pay for campaigns. Space owners host the camapigns and receive payments.
 
 ### Starting a promotion campaign
 
@@ -36,7 +36,7 @@ Advertiser starts a promo campaign:
 
 ### Adding a new space
 
-Host lists a their space.
+Host lists their space.
 
 1. Space owner creates a new space specifying availability date, type of space, address, contact info, price, size, images and categories of products.
 
@@ -63,7 +63,7 @@ Business owners looking for either advertise their businesses or to host such ad
 
 1. User management - ability to sign up, log in and reset password.
 1. Space management - CRUD with the ability to add a picture to the space.
-1. Campaign management - CRUD restriced to campaign status. 
+1. Campaign management - CRUD restricted to campaign status. 
 1. Campaign and Space linkage - ability to search and link spaces to campaigns.
 1. Campaign check out - ability to reserve spaces and to pay for campaign.
 1. Order logging - ability to log transactions.
@@ -130,7 +130,7 @@ Business owners looking for either advertise their businesses or to host such ad
 1. Host marks a space as inactive to hide the space from listing.
 1. Advertiser creates a new account.
 1. Advertiser lists their campaigns.
-1. Advertiser edits campaign parameters befor adding any spaces.
+1. Advertiser edits campaign parameters before adding any spaces.
 1. Advertiser deletes a campaign that is not paid.
 1. Advertiser adds or removes spaces to a campaign.
 1. Advertiser checks out campaign being provided with total cost.
@@ -173,7 +173,7 @@ The application serves the traffic using PostgreSQL as a DB and AWS S3 as a stor
 
 __Campaign__ represent promotion campaign defined by the start date and duration. The campaign includes one or more spaces. Products promoted by this campaign will be displayed in these spaces. Campaign maintains basics per space stats. Campagnie can be in one of these statuses:
 
-1. New - campaing is being created.
+1. New - campaign is being created.
 1. Pending Payment - campaign is finalized and needs to be paid.
 1. Processing Payment - payment has been made but hasn't been confirmed.
 1. Ready - payment is confirmed.
@@ -201,7 +201,7 @@ __Campaign product category__ represent different types of products, for example
 
 Space is considered suitable for a campaign if it supports all product types requested by a campaign.
 
-__Space category__ defines a type of the space, for example shop, cafe, bars etc.
+__Space category__ defines a type of space, for example shops, cafes, bars etc.
 
 __Order__ logs payment info (no credit card info is logged). This can be used for future reference.
 
