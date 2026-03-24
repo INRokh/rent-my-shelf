@@ -69,7 +69,7 @@ gem "jquery-rails"
 
 gem "aws-sdk-s3", "~> 1.53"
 
-gem "image_processing", "~> 1.9"
+gem "image_processing", "~> 1.12"
 
 gem "simple_calendar", "~> 2.3"
 
